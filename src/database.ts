@@ -10,12 +10,20 @@ const pool = mysql
   })
   .promise();
 
+
+export async function createCategory(name:string) {
+const [result] = await pool.query<[RowDataPacket]>(`
+  INSERT INTO kategori_surat (nama_kategori)
+  VALUES (?)
+  `, [name])
+  return result
+  // const [rows]  = await pool.query<[RowDataPacket]>(`SELECT * FROM kategori_surat`);
+  // return rows as unknown as Category[] ;
+}
+
 export async function getAllCategory() {
-  const [rows]  = await pool.query<[RowDataPacket]>(
-    `
-  SELECT * 
-  FROM kategori_surat`);
-  return rows ;
+  const [rows]  = await pool.query<[RowDataPacket]>(`SELECT * FROM kategori_surat`);
+  return rows as unknown as Category[] ;
 }
 export async function getCategory(id:number) {
   const [rows]  = await pool.query<[RowDataPacket]>(
