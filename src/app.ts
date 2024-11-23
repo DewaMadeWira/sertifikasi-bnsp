@@ -1,5 +1,5 @@
 import express, { Request,Response } from "express";
-import { createCategory, deleteCategory, getAllCategory, getCategory, updateCategory } from "./database";
+import { createCategory, deleteCategory, getAllCategory, getCategory, updateCategory } from "./database/category";
 import { Category } from "./types/category";
 
 const app = express();  
