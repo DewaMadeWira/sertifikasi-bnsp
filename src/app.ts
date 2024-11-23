@@ -1,5 +1,5 @@
 import express, { Request,Response } from "express";
-import { createCategory, getAllCategory, getCategory, updateCategory } from "./database";
+import { createCategory, deleteCategory, getAllCategory, getCategory, updateCategory } from "./database";
 import { Category } from "./types/category";
 
 const app = express();  
@@ -17,13 +17,15 @@ res.send(category)
 })
 
 app.post('/api/category', async(req:Request<{},{},Category>,res:Response)=>{
-    // res.send(req.body.nama_kategori)
     const category = await createCategory(req.body.nama_kategori)
     res.send(category)
 })
 app.put('/api/category', async(req:Request<{},{},Category>,res:Response)=>{
-    // res.send(req.body.nama_kategori)
     const category = await updateCategory(req.body.nama_kategori,req.body.id)
+    res.send(category)
+})
+app.delete('/api/category', async(req:Request<{},{},Category>,res:Response)=>{
+    const category = await deleteCategory(req.body.id)
     res.send(category)
 })
 

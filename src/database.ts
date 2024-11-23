@@ -41,8 +41,12 @@ const [result] = await pool.query<[RowDataPacket]>(`
  UPDATE kategori_surat SET nama_kategori = ? WHERE id = ?; 
   `, [name,id])
   return result
-  // const [rows]  = await pool.query<[RowDataPacket]>(`SELECT * FROM kategori_surat`);
-  // return rows as unknown as Category[] ;
+}
+export async function deleteCategory(id:number) {
+const [result] = await pool.query<[RowDataPacket]>(`
+ DELETE FROM kategori_surat WHERE id = ? ; 
+  `, [id])
+  return result
 }
 
 
