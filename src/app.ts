@@ -19,13 +19,25 @@ app.get('/',(req,res)=>{
 
 app.use("/api/category",categoryRouter)
 app.use("/api/letter",letterRouter)
-const upload = multer({ dest: 'images/' })
 
-app.post('/api/images', upload.single('image'), (req:Request, res:Response) => {
-  // 4
+var storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, './images');
+    },
+    filename: function (req, file, callback) {
+        callback(null, file.originalname);
+    }
+});
+
+var upload = multer({ storage: storage }).single('file');
+
+
+
+// const upload = multer({ dest: 'images/' })
+
+app.post('/api/images', upload, (req:Request, res:Response) => {
   const imageName = req.file!.filename
 
-  // Save this data to a database probably
 
   console.log( imageName)
   res.send({ imageName})
