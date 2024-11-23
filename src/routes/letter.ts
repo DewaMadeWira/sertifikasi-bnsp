@@ -1,9 +1,10 @@
 import { Router } from "express";
 import { Request,Response } from "express";
-
+import path from 'path';
 import { createLetter, getAllLetter, getLetter } from "../database/letter";
 import { Letter } from "../types/letter";
 import multer from 'multer';
+const letterRouter = Router()
 const storage = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, './uploads');
@@ -22,7 +23,6 @@ const fileFilter = (req:Request, file:any, cb:any) => {
 };
 
 const upload = multer({ storage: storage,fileFilter:fileFilter }).single('file');
-const letterRouter = Router()
 
 letterRouter.post('/',upload, async(req:Request<{},{},Letter>,res:Response)=>{
 
@@ -36,6 +36,16 @@ letterRouter.post('/',upload, async(req:Request<{},{},Letter>,res:Response)=>{
 letterRouter.get('/', async(req:Request<{},{},Letter>,res:Response)=>{
     const category = await getAllLetter()
     res.send(category)
+})
+letterRouter.get('/pdf', (req:Request,res:Response)=>{
+    // res.send("ok")
+    const filePath = path.join(__dirname,'..',`..`, 'uploads', 'tes.pdf'); 
+    res.sendFile(filePath, (err) => {
+        if (err) {
+        console.error('Error sending file:', err);
+        res.status(500).send('Failed to serve file');
+        }
+    });
 })
 letterRouter.get('/:id', async(req:Request<{id:number}>,res:Response)=>{
     const category = await getLetter(req.params.id)
