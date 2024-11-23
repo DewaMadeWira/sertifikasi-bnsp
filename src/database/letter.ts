@@ -3,11 +3,11 @@ import { pool } from "../database";
 import { Category } from "../types/category";
 
 
-export async function createLetter(letterNumber: string, category: number,title: string) {
+export async function createLetter(letterNumber: string, category: number,title: string,fileName:string) {
 const [result] = await pool.query<[RowDataPacket]>(`
   INSERT INTO arsip_surat (nomor_surat,id_kategori,judul,file_pdf)
-  VALUES (?,?,?,'makan')
-  `, [letterNumber,category,title])
+  VALUES (?,?,?,?)
+  `, [letterNumber,category,title,fileName])
   return result
 }
 
