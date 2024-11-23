@@ -36,6 +36,14 @@ export async function getCategory(id:number) {
   );
   return rows[0] as Category;
 }
+export async function updateCategory(name:string,id:number) {
+const [result] = await pool.query<[RowDataPacket]>(`
+ UPDATE kategori_surat SET nama_kategori = ? WHERE id = ?; 
+  `, [name,id])
+  return result
+  // const [rows]  = await pool.query<[RowDataPacket]>(`SELECT * FROM kategori_surat`);
+  // return rows as unknown as Category[] ;
+}
 
 
 // const kategori = await getCategory(1);
