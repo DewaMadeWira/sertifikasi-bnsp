@@ -1,6 +1,7 @@
 import { RowDataPacket } from "mysql2";
 import { pool } from "../database";
 import { Category } from "../types/category";
+import { Letter } from "../types/letter";
 
 
 export async function createLetter(letterNumber: string, category: number,title: string,fileName:string) {
@@ -13,7 +14,7 @@ const [result] = await pool.query<[RowDataPacket]>(`
 
 export async function getAllLetter() {
   const [rows]  = await pool.query<[RowDataPacket]>(`SELECT * FROM arsip_surat`);
-  return rows as unknown as Category[] ;
+  return rows as unknown as Letter[] ;
 }
 
 export async function getLetter(id:number) {
@@ -25,5 +26,5 @@ export async function getLetter(id:number) {
   `,
     [id]
   );
-  return rows[0] as Category;
+  return rows[0] as Letter;
 }

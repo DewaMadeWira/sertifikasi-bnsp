@@ -4,6 +4,7 @@ import path from 'path';
 import { createLetter, getAllLetter, getLetter } from "../database/letter";
 import { Letter } from "../types/letter";
 import multer from 'multer';
+
 const letterRouter = Router()
 const storage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -26,30 +27,37 @@ const upload = multer({ storage: storage,fileFilter:fileFilter }).single('file')
 
 letterRouter.post('/',upload, async(req:Request<{},{},Letter>,res:Response)=>{
 
-    const fileName = `/${req.file!.filename}`
-    console.log( fileName)
-    const category = await createLetter(req.body.nomor_surat,req.body.id_kategori ,req.body.judul,fileName)
+    const filePath = path.join(__dirname,'..',`..`, 'uploads', `${req.file!.filename}`); 
+    console.log(filePath)
+    const letter = await createLetter(req.body.nomor_surat,req.body.id_kategori ,req.body.judul,filePath)
 
-    res.send(category)
+    res.send(letter)
 })
 
 letterRouter.get('/', async(req:Request<{},{},Letter>,res:Response)=>{
-    const category = await getAllLetter()
-    res.send(category)
+    const letter = await getAllLetter()
+    res.send(letter)
 })
-letterRouter.get('/pdf', (req:Request,res:Response)=>{
+letterRouter.get('/pdf/:id', async(req:Request<{id:number}>,res:Response)=>{
     // res.send("ok")
-    const filePath = path.join(__dirname,'..',`..`, 'uploads', 'tes.pdf'); 
-    res.sendFile(filePath, (err) => {
+
+    const letter = await getLetter(req.params.id)
+    const filePath = letter.file_pdf; 
+    const fileName = filePath.split('\\').pop();
+    console.log(fileName)
+     res.setHeader('Content-Type', 'application/pdf');
+
+    res.sendFile(filePath,{headers: { 'Content-Disposition': `attachment; filename="${fileName}"` }} ,(err) => {
         if (err) {
         console.error('Error sending file:', err);
         res.status(500).send('Failed to serve file');
         }
     });
+    //  res.download(filePath, fileName?.toString);
 })
 letterRouter.get('/:id', async(req:Request<{id:number}>,res:Response)=>{
-    const category = await getLetter(req.params.id)
-    res.send(category)
+    const letter = await getLetter(req.params.id)
+    res.send(letter)
 })
 
 export default letterRouter
