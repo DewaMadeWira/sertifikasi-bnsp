@@ -1,9 +1,10 @@
 import { Router } from "express";
 import { Request,Response } from "express";
 import path from 'path';
-import { createLetter, getAllLetter, getLetter } from "../database/letter";
+import { createLetter, deleteLetter, getAllLetter, getLetter, updateLetter } from "../database/letter";
 import { Letter } from "../types/letter";
 import multer from 'multer';
+import fs from 'fs';
 
 const letterRouter = Router()
 const storage = multer.diskStorage({
@@ -57,6 +58,29 @@ letterRouter.get('/pdf/:id', async(req:Request<{id:number}>,res:Response)=>{
 })
 letterRouter.get('/:id', async(req:Request<{id:number}>,res:Response)=>{
     const letter = await getLetter(req.params.id)
+    res.send(letter)
+})
+
+letterRouter.put('/', upload, async(req:Request<{},{},Omit<Letter,'file_pdf'>>,res:Response)=>{
+    const {file_pdf:filePathSource} = await getLetter(req.body.id)
+    fs.unlink(filePathSource, (err) => {
+    if (err) {
+        console.error(`Error removing file: ${err}`);
+        return;
+    }
+
+    console.log(`File ${filePathSource} has been successfully removed.`);
+    })
+    
+    const filePath = path.join(__dirname,'..',`..`, 'uploads', `${req.file!.filename}`); 
+    console.log(filePath)
+
+    const letter = await updateLetter({...req.body,file_pdf:filePath})
+    res.send(letter)
+})
+
+letterRouter.delete('/:id', async(req:Request<{id:number}>,res:Response)=>{
+    const letter = await deleteLetter(req.params.id)
     res.send(letter)
 })
 
