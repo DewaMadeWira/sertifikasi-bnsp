@@ -2,11 +2,10 @@ import express, { Request,Response } from "express";
 import categoryRouter from "./routes/category";
 import letterRouter from "./routes/letter";
 import multer from 'multer';
-// 2
-
-// 3
+ import cors from 'cors';
 
 const app = express();  
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -19,12 +18,6 @@ app.get('/',(req,res)=>{
 
 app.use("/api/category",categoryRouter)
 app.use("/api/letter",letterRouter)
-
-
-
-
-// const upload = multer({ dest: 'images/' })
-
 
 
 app.listen(PORT,()=>{
