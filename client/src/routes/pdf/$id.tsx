@@ -1,4 +1,3 @@
-import * as React from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import axios from "axios";
 import { useQuery } from "react-query";
@@ -17,7 +16,6 @@ function RouteComponent() {
     data: pdfUrl,
     isLoading,
     error,
-    isError,
   } = useQuery(
     ["pdf", id],
     async () => {
@@ -34,7 +32,6 @@ function RouteComponent() {
     data: letter,
     isLoading: loadingArsip,
     error: errorArsip,
-    isError: isErrorArsip,
   } = useQuery<Letter>({
     queryKey: ["surat_satu", id],
     staleTime: Infinity,

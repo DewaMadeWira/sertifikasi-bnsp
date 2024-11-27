@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ROUTES, ROUTES_CLIENT } from "@/types/routes";
+import { ROUTES } from "@/types/routes";
 import { useMutation } from "react-query";
 import axios from "axios";
 import { Link } from "@tanstack/react-router";
@@ -132,7 +132,6 @@ export const columns: ColumnDef<Letter>[] = [
     header: "Aksi",
     cell: ({ row }) => {
       const letter = row.original;
-      const { toast } = useToast();
 
       // const deleteLetter = async () => {
       //   // await axios.delete(`${ROUTES.ARSIP}${letter.id}`);
