@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import axios from "axios";
 import { useQuery } from "react-query";
 import { ROUTES } from "@/types/routes";
@@ -87,10 +87,12 @@ function RouteComponent() {
           </Button>
         </a>
         <Button className={STYLE.BUTTON_PRIMARY}>
-          <div className="flex justify-between w-20 items-center">
-            <p>Ganti File</p>
-            <Edit></Edit>
-          </div>
+          <Link to="/pdf/update/$id" params={{ id: id }}>
+            <div className="flex justify-between w-20 items-center">
+              <p>Ganti File</p>
+              <Edit></Edit>
+            </div>
+          </Link>
         </Button>
       </div>
     </Sidebar>
