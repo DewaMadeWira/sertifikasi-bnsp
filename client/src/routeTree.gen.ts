@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as PdfIdImport } from './routes/pdf/$id'
 
 // Create Virtual Routes
 
@@ -40,6 +41,12 @@ const IndexLazyRoute = IndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
+const PdfIdRoute = PdfIdImport.update({
+  id: '/pdf/$id',
+  path: '/pdf/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -65,6 +72,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KategoriLazyImport
       parentRoute: typeof rootRoute
     }
+    '/pdf/$id': {
+      id: '/pdf/$id'
+      path: '/pdf/$id'
+      fullPath: '/pdf/$id'
+      preLoaderRoute: typeof PdfIdImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -74,12 +88,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/about': typeof AboutLazyRoute
   '/kategori': typeof KategoriLazyRoute
+  '/pdf/$id': typeof PdfIdRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/about': typeof AboutLazyRoute
   '/kategori': typeof KategoriLazyRoute
+  '/pdf/$id': typeof PdfIdRoute
 }
 
 export interface FileRoutesById {
@@ -87,14 +103,15 @@ export interface FileRoutesById {
   '/': typeof IndexLazyRoute
   '/about': typeof AboutLazyRoute
   '/kategori': typeof KategoriLazyRoute
+  '/pdf/$id': typeof PdfIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/kategori'
+  fullPaths: '/' | '/about' | '/kategori' | '/pdf/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/kategori'
-  id: '__root__' | '/' | '/about' | '/kategori'
+  to: '/' | '/about' | '/kategori' | '/pdf/$id'
+  id: '__root__' | '/' | '/about' | '/kategori' | '/pdf/$id'
   fileRoutesById: FileRoutesById
 }
 
@@ -102,12 +119,14 @@ export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   AboutLazyRoute: typeof AboutLazyRoute
   KategoriLazyRoute: typeof KategoriLazyRoute
+  PdfIdRoute: typeof PdfIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   AboutLazyRoute: AboutLazyRoute,
   KategoriLazyRoute: KategoriLazyRoute,
+  PdfIdRoute: PdfIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -122,7 +141,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
-        "/kategori"
+        "/kategori",
+        "/pdf/$id"
       ]
     },
     "/": {
@@ -133,6 +153,9 @@ export const routeTree = rootRoute
     },
     "/kategori": {
       "filePath": "kategori.lazy.tsx"
+    },
+    "/pdf/$id": {
+      "filePath": "pdf/$id.tsx"
     }
   }
 }
