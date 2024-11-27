@@ -38,6 +38,71 @@ import { useToast } from "@/hooks/use-toast";
 //   status: "pending" | "processing" | "success" | "failed"
 //   email: string
 // }
+const ActionCell = ({ letter }: { letter: Letter }) => {
+  const { toast } = useToast();
+  const { mutate: deleteLetter } = useMutation({
+    mutationFn: async () => {
+      await axios.delete(`${ROUTES.ARSIP}${letter.id}`);
+    },
+    onSuccess: () => {
+      toast({
+        title: "Berhasil",
+        description: "Surat berhasil dihapus",
+        className: "bg-standard text-white",
+      });
+    },
+  });
+
+  return (
+    <AlertDialog>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Buka menu</span>
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="bg-standard text-white">
+          <DropdownMenuLabel>Aksi</DropdownMenuLabel>
+          {/* <DropdownMenuItem
+              onClick={() => navigator.clipboard.writeText(payment.nomor_surat)}
+            >
+              Copy payment ID
+            </DropdownMenuItem> */}
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <AlertDialogTrigger>Hapus</AlertDialogTrigger>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <a href={`${ROUTES.ARSIP_PDF}${letter.id}`}>Unduh</a>
+          </DropdownMenuItem>
+          <DropdownMenuItem>Lihat</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <AlertDialogContent className="bg-standard text-white">
+        <AlertDialogHeader>
+          <AlertDialogTitle>
+            Surat "{letter.judul}" akan dihapus
+          </AlertDialogTitle>
+          <AlertDialogDescription className="text-white">
+            Surat yang dihapus tidak dapat dikembalikan. Apakah anda yakin akan
+            menghapus ?
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        {/* Existing alert dialog content */}
+        <AlertDialogFooter>
+          <AlertDialogCancel className="text-black">Kembali</AlertDialogCancel>
+          <AlertDialogAction
+            className="bg-red-500"
+            onClick={() => deleteLetter()}
+          >
+            Hapus
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
 
 export const columns: ColumnDef<Letter>[] = [
   {
@@ -64,79 +129,33 @@ export const columns: ColumnDef<Letter>[] = [
       const letter = row.original;
       const { toast } = useToast();
 
-      const deleteLetter = async () => {
-        await axios.delete(`${ROUTES.ARSIP}${letter.id}`);
-        toast({
-          title: "Berhasil",
-          description: "Surat berhasil dihapus",
-          className: "bg-standard text-white",
-        });
-        // const { data, isSuccess } = useMutation({
-        //   mutationFn: async () => {
-        //     await axios.delete(`${ROUTES.ARSIP}${letter.id}`);
-        //     console.log(data);
+      // const deleteLetter = async () => {
+      //   // await axios.delete(`${ROUTES.ARSIP}${letter.id}`);
+      //   // toast({
+      //   //   title: "Berhasil",
+      //   //   description: "Surat berhasil dihapus",
+      //   //   className: "bg-standard text-white",
+      //   // });
+      //   const { data } = useMutation({
+      //     mutationFn: async () => {
+      //       await axios.delete(`${ROUTES.ARSIP}${letter.id}`);
+      //       console.log(data);
 
-        //     isSuccess &&
-        //       toast({
-        //         title: "Berhasil",
-        //         description: "Surat berhasil dihapus",
-        //         className: "bg-standard text-white",
-        //       });
+      //       // document.body.appendChild(link)
+      //       // link.click()
+      //       // link.remove()
+      //     },
+      //     onSuccess: (data) => {
+      //       toast({
+      //         title: "Berhasil",
+      //         description: "Surat berhasil dihapus",
+      //         className: "bg-standard text-white",
+      //       });
+      //     },
+      //   });
+      // };
 
-        //     // document.body.appendChild(link)
-        //     // link.click()
-        //     // link.remove()
-        //   },
-        // });
-      };
-
-      return (
-        <AlertDialog>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Buka menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-standard text-white">
-              <DropdownMenuLabel>Aksi</DropdownMenuLabel>
-              {/* <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.nomor_surat)}
-            >
-              Copy payment ID
-            </DropdownMenuItem> */}
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <AlertDialogTrigger>Hapus</AlertDialogTrigger>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <a href={`${ROUTES.ARSIP_PDF}${letter.id}`}>Unduh</a>
-              </DropdownMenuItem>
-              <DropdownMenuItem>Lihat</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <AlertDialogContent className="bg-standard text-white">
-            <AlertDialogHeader>
-              <AlertDialogTitle>
-                Surat "{letter.judul}" akan dihapus
-              </AlertDialogTitle>
-              <AlertDialogDescription className="text-white">
-                Surat yang dihapus tidak dapat dikembalikan. Apakah anda yakin
-                akan menghapus ?
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel className="text-black">
-                Kembali
-              </AlertDialogCancel>
-              <AlertDialogAction className="bg-red-500" onClick={deleteLetter}>
-                Hapus
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      );
+      return <ActionCell letter={letter} />;
     },
   },
 ];
