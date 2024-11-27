@@ -1,10 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import App from "./App.tsx";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
-import ReactDOM from "react-dom";
 import { Toaster } from "./components/ui/toaster.tsx";
 
 const router = createRouter({ routeTree });
@@ -21,7 +19,7 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <RouterProvider router={router} />
-       <Toaster />
+      <Toaster />
     </StrictMode>
   );
 }
