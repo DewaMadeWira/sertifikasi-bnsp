@@ -24,37 +24,14 @@ export const Route = createFileRoute("/pdf/update/$id")({
 
 function RouteComponent() {
   const { id } = Route.useParams();
-
-  const { data: letter, isLoading: isLoadingLetter } = useQuery({
-    queryKey: ["update_letter", id],
-    queryFn: async () => {
-      const { data } = await axios.get(ROUTES.ARSIP + id);
-      console.log(data);
-      return data as Letter;
-    },
-    staleTime: Infinity,
-  });
-  if (isLoadingLetter) return <div>Loading...</div>;
-  if (letter == undefined) return <div>Error loading data: </div>;
-
-  const { data, isLoading } = useQuery({
-    queryKey: ["kategori_update"],
-    queryFn: async () => {
-      const { data } = await axios.get(ROUTES.CATEGORY);
-      console.log(data);
-      return data as Category[];
-    },
-  });
-  if (isLoading) return <div>Loading...</div>;
-  if (data == undefined) return <div>Error loading data: </div>;
-
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
-    nomor_surat: letter.nomor_surat,
-    id_kategori: letter.id_kategori,
-    judul: letter.judul,
+    nomor_surat: "",
+    id_kategori: "",
+    judul: "",
     file: null,
   });
-  const { toast } = useToast();
+
   const updateLetter = useMutation({
     mutationKey: ["update_letter", id],
     mutationFn: async (formData: {
@@ -72,7 +49,7 @@ function RouteComponent() {
       if (formData.file) {
         data.append("file", formData.file);
       }
-      const response = await axios.post(ROUTES.ARSIP, data);
+      const response = await axios.put(ROUTES.ARSIP, data);
       return response.data;
     },
     onSuccess: () => {
@@ -86,6 +63,35 @@ function RouteComponent() {
       // queryClient.invalidateQueries(["pdfs"]); // If you need to refetch PDF list
     },
   });
+
+  const { data: letter, isLoading: isLoadingLetter } = useQuery({
+    queryKey: ["update_letter", id],
+    queryFn: async () => {
+      const { data } = await axios.get(ROUTES.ARSIP + id);
+      setFormData({
+        nomor_surat: data.nomor_surat,
+        id_kategori: data.id_kategori,
+        judul: data.judul,
+        file: null,
+      });
+      console.log(data);
+      return data as Letter;
+    },
+    staleTime: Infinity,
+  });
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["kategori_update"],
+    queryFn: async () => {
+      const { data } = await axios.get(ROUTES.CATEGORY);
+      console.log(data);
+      return data as Category[];
+    },
+  });
+  if (isLoadingLetter) return <div>Loading...</div>;
+  if (letter == undefined) return <div>Error loading data: </div>;
+  if (isLoading) return <div>Loading...</div>;
+  if (data == undefined) return <div>Error loading data: </div>;
 
   const handleFormChange = (e: any) => {
     const { name, value } = e.target;
@@ -130,7 +136,7 @@ function RouteComponent() {
           <form onSubmit={handleSubmit} className="flex flex-col gap-2">
             <Input
               name="nomor_surat"
-              placeholder="Nomor Surat"
+              placeholder={letter.nomor_surat}
               required
               value={formData.nomor_surat}
               onChange={handleFormChange}

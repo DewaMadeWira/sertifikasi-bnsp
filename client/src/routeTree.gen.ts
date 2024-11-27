@@ -16,6 +16,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as UpdatepdfImport } from './routes/update_pdf'
 import { Route as CreatepdfImport } from './routes/create_pdf'
 import { Route as IndexImport } from './routes/index'
+import { Route as PdfUpdateidImport } from './routes/pdf/update$id'
 import { Route as PdfIdImport } from './routes/pdf/$id'
 import { Route as PdfUpdateIdImport } from './routes/pdf/update/$id'
 
@@ -53,6 +54,12 @@ const CreatepdfRoute = CreatepdfImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PdfUpdateidRoute = PdfUpdateidImport.update({
+  id: '/pdf/update$id',
+  path: '/pdf/update$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -114,6 +121,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PdfIdImport
       parentRoute: typeof rootRoute
     }
+    '/pdf/update$id': {
+      id: '/pdf/update$id'
+      path: '/pdf/update$id'
+      fullPath: '/pdf/update$id'
+      preLoaderRoute: typeof PdfUpdateidImport
+      parentRoute: typeof rootRoute
+    }
     '/pdf/update/$id': {
       id: '/pdf/update/$id'
       path: '/pdf/update/$id'
@@ -133,6 +147,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutLazyRoute
   '/kategori': typeof KategoriLazyRoute
   '/pdf/$id': typeof PdfIdRoute
+  '/pdf/update$id': typeof PdfUpdateidRoute
   '/pdf/update/$id': typeof PdfUpdateIdRoute
 }
 
@@ -143,6 +158,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutLazyRoute
   '/kategori': typeof KategoriLazyRoute
   '/pdf/$id': typeof PdfIdRoute
+  '/pdf/update$id': typeof PdfUpdateidRoute
   '/pdf/update/$id': typeof PdfUpdateIdRoute
 }
 
@@ -154,6 +170,7 @@ export interface FileRoutesById {
   '/about': typeof AboutLazyRoute
   '/kategori': typeof KategoriLazyRoute
   '/pdf/$id': typeof PdfIdRoute
+  '/pdf/update$id': typeof PdfUpdateidRoute
   '/pdf/update/$id': typeof PdfUpdateIdRoute
 }
 
@@ -166,6 +183,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/kategori'
     | '/pdf/$id'
+    | '/pdf/update$id'
     | '/pdf/update/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -175,6 +193,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/kategori'
     | '/pdf/$id'
+    | '/pdf/update$id'
     | '/pdf/update/$id'
   id:
     | '__root__'
@@ -184,6 +203,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/kategori'
     | '/pdf/$id'
+    | '/pdf/update$id'
     | '/pdf/update/$id'
   fileRoutesById: FileRoutesById
 }
@@ -195,6 +215,7 @@ export interface RootRouteChildren {
   AboutLazyRoute: typeof AboutLazyRoute
   KategoriLazyRoute: typeof KategoriLazyRoute
   PdfIdRoute: typeof PdfIdRoute
+  PdfUpdateidRoute: typeof PdfUpdateidRoute
   PdfUpdateIdRoute: typeof PdfUpdateIdRoute
 }
 
@@ -205,6 +226,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutLazyRoute: AboutLazyRoute,
   KategoriLazyRoute: KategoriLazyRoute,
   PdfIdRoute: PdfIdRoute,
+  PdfUpdateidRoute: PdfUpdateidRoute,
   PdfUpdateIdRoute: PdfUpdateIdRoute,
 }
 
@@ -224,6 +246,7 @@ export const routeTree = rootRoute
         "/about",
         "/kategori",
         "/pdf/$id",
+        "/pdf/update$id",
         "/pdf/update/$id"
       ]
     },
@@ -244,6 +267,9 @@ export const routeTree = rootRoute
     },
     "/pdf/$id": {
       "filePath": "pdf/$id.tsx"
+    },
+    "/pdf/update$id": {
+      "filePath": "pdf/update$id.tsx"
     },
     "/pdf/update/$id": {
       "filePath": "pdf/update/$id.tsx"
