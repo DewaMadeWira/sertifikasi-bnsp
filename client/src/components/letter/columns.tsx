@@ -13,9 +13,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ROUTES } from "@/types/routes";
+import { ROUTES, ROUTES_CLIENT } from "@/types/routes";
 import { useMutation } from "react-query";
 import axios from "axios";
+import { Link } from "@tanstack/react-router";
 
 import {
   AlertDialog,
@@ -77,7 +78,11 @@ const ActionCell = ({ letter }: { letter: Letter }) => {
           <DropdownMenuItem>
             <a href={`${ROUTES.ARSIP_PDF}${letter.id}`}>Unduh</a>
           </DropdownMenuItem>
-          <DropdownMenuItem>Lihat</DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link to="/pdf/$id" params={{ id: letter.id.toString() }}>
+              Lihat
+            </Link>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       <AlertDialogContent className="bg-standard text-white">
@@ -104,7 +109,6 @@ const ActionCell = ({ letter }: { letter: Letter }) => {
     </AlertDialog>
   );
 };
-
 export const columns: ColumnDef<Letter>[] = [
   {
     accessorKey: "nomor_surat",

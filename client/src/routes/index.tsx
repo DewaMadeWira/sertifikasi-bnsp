@@ -1,3 +1,4 @@
+import * as React from "react";
 import { columns } from "@/components/letter/columns";
 import { DataTable } from "@/components/letter/data-table";
 import LetterTable from "@/components/letter/page";
@@ -6,20 +7,21 @@ import { Button } from "@/components/ui/button";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/hooks/use-toast";
 import { Letter } from "@/types/letter";
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { ROUTES } from "@/types/routes";
+import { createFileRoute } from "@tanstack/react-router";
 import axios from "axios";
 import { useQuery } from "react-query";
 
-export const Route = createLazyFileRoute("/")({
-  component: Index,
+export const Route = createFileRoute("/")({
+  component: RouteComponent,
 });
 
-function Index() {
+function RouteComponent() {
   const { toast } = useToast();
   const { data, isLoading, error } = useQuery({
     queryKey: ["surat"],
     queryFn: async () => {
-      const { data } = await axios.get("http://localhost:3001/api/letter");
+      const { data } = await axios.get(ROUTES.ARSIP);
       return data as Letter[];
     },
   });

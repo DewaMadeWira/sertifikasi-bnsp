@@ -4,8 +4,8 @@ import { Link } from "@tanstack/react-router";
 export default function Sidebar({ children }: { children: React.ReactNode }) {
   //   const { toast } = useToast();
   return (
-    <div className="h-screen w-full font-outfit flex">
-      <aside className=" w-1/6 p-5 border-r-[1px] border-white h-screen">
+    <div className="min-h-screen w-full font-outfit flex">
+      <aside className=" w-1/6 p-5 border-r-[1px] border-white min-h-screen">
         <h3 className="font-bold text-xl ">Menu</h3>
         <div className="flex flex-col gap-5 mt-10 text-lg">
           <Link
