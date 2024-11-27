@@ -13,14 +13,14 @@ const [result] = await pool.query<[RowDataPacket]>(`
 }
 
 export async function getAllLetter() {
-  const [rows]  = await pool.query<[RowDataPacket]>(`SELECT arsip_surat.id,arsip_surat.nomor_surat,arsip_surat.judul, kategori_surat.nama_kategori, arsip_surat.file_pdf from arsip_surat INNER join kategori_surat on arsip_surat.id_kategori = kategori_surat.id`);
+  const [rows]  = await pool.query<[RowDataPacket]>(`SELECT arsip_surat.id,arsip_surat.nomor_surat,arsip_surat.judul, kategori_surat.nama_kategori, arsip_surat.file_pdf, arsip_surat.created_at from arsip_surat INNER join kategori_surat on arsip_surat.id_kategori = kategori_surat.id`);
   return rows as unknown as Letter[] ;
 }
 
 export async function getLetter(id:number) {
   const [rows]  = await pool.query<[RowDataPacket]>(
     `
-    SELECT arsip_surat.id,arsip_surat.nomor_surat,arsip_surat.judul, kategori_surat.nama_kategori, arsip_surat.file_pdf from arsip_surat INNER join kategori_surat on arsip_surat.id_kategori = kategori_surat.id WHERE arsip_surat.id = ?
+    SELECT arsip_surat.id,arsip_surat.nomor_surat,arsip_surat.judul, kategori_surat.nama_kategori, arsip_surat.file_pdf,  arsip_surat.created_at from arsip_surat INNER join kategori_surat on arsip_surat.id_kategori = kategori_surat.id WHERE arsip_surat.id = ?
   `,
     [id]
   );
