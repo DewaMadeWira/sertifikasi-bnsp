@@ -6,6 +6,7 @@ import { Letter } from "@/types/letter";
 import Sidebar from "@/components/Sidebar";
 import { Button } from "@/components/ui/button";
 import { Download, Edit } from "lucide-react";
+import { STYLE } from "@/types/style";
 
 export const Route = createFileRoute("/pdf/$id")({
   component: RouteComponent,
@@ -78,15 +79,15 @@ function RouteComponent() {
       </div>
       <div className="flex gap-3 mt-10">
         <a href={ROUTES.ARSIP_PDF + id} download>
-          <Button className="bg-white text-black hover:bg-white hover:-translate-y-1 transition-all w-24">
-            <div className="flex justify-between w-full">
+          <Button className={STYLE.BUTTON_PRIMARY}>
+            <div className="flex justify-between w-16">
               <p>Unduh</p>
               <Download></Download>
             </div>
           </Button>
         </a>
-        <Button className="bg-white text-black hover:bg-white hover:-translate-y-1 transition-all w-28">
-          <div className="flex justify-between w-full items-center">
+        <Button className={STYLE.BUTTON_PRIMARY}>
+          <div className="flex justify-between w-20 items-center">
             <p>Ganti File</p>
             <Edit></Edit>
           </div>
