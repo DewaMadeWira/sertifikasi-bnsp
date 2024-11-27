@@ -14,6 +14,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as UpdatepdfImport } from './routes/update_pdf'
+import { Route as CreatepdfcopyImport } from './routes/create_category'
 import { Route as CreatepdfImport } from './routes/create_pdf'
 import { Route as IndexImport } from './routes/index'
 import { Route as PdfUpdateidImport } from './routes/pdf/update$id'
@@ -42,6 +43,12 @@ const AboutLazyRoute = AboutLazyImport.update({
 const UpdatepdfRoute = UpdatepdfImport.update({
   id: '/update_pdf',
   path: '/update_pdf',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CreatepdfcopyRoute = CreatepdfcopyImport.update({
+  id: '/create_pdf copy',
+  path: '/create_pdf copy',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -91,6 +98,13 @@ declare module '@tanstack/react-router' {
       path: '/create_pdf'
       fullPath: '/create_pdf'
       preLoaderRoute: typeof CreatepdfImport
+      parentRoute: typeof rootRoute
+    }
+    '/create_pdf copy': {
+      id: '/create_pdf copy'
+      path: '/create_pdf copy'
+      fullPath: '/create_pdf copy'
+      preLoaderRoute: typeof CreatepdfcopyImport
       parentRoute: typeof rootRoute
     }
     '/update_pdf': {
@@ -143,6 +157,7 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/create_pdf': typeof CreatepdfRoute
+  '/create_pdf copy': typeof CreatepdfcopyRoute
   '/update_pdf': typeof UpdatepdfRoute
   '/about': typeof AboutLazyRoute
   '/kategori': typeof KategoriLazyRoute
@@ -154,6 +169,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/create_pdf': typeof CreatepdfRoute
+  '/create_pdf copy': typeof CreatepdfcopyRoute
   '/update_pdf': typeof UpdatepdfRoute
   '/about': typeof AboutLazyRoute
   '/kategori': typeof KategoriLazyRoute
@@ -166,6 +182,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/create_pdf': typeof CreatepdfRoute
+  '/create_pdf copy': typeof CreatepdfcopyRoute
   '/update_pdf': typeof UpdatepdfRoute
   '/about': typeof AboutLazyRoute
   '/kategori': typeof KategoriLazyRoute
@@ -179,6 +196,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/create_pdf'
+    | '/create_pdf copy'
     | '/update_pdf'
     | '/about'
     | '/kategori'
@@ -189,6 +207,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/create_pdf'
+    | '/create_pdf copy'
     | '/update_pdf'
     | '/about'
     | '/kategori'
@@ -199,6 +218,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/create_pdf'
+    | '/create_pdf copy'
     | '/update_pdf'
     | '/about'
     | '/kategori'
@@ -211,6 +231,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CreatepdfRoute: typeof CreatepdfRoute
+  CreatepdfcopyRoute: typeof CreatepdfcopyRoute
   UpdatepdfRoute: typeof UpdatepdfRoute
   AboutLazyRoute: typeof AboutLazyRoute
   KategoriLazyRoute: typeof KategoriLazyRoute
@@ -222,6 +243,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CreatepdfRoute: CreatepdfRoute,
+  CreatepdfcopyRoute: CreatepdfcopyRoute,
   UpdatepdfRoute: UpdatepdfRoute,
   AboutLazyRoute: AboutLazyRoute,
   KategoriLazyRoute: KategoriLazyRoute,
@@ -242,6 +264,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/create_pdf",
+        "/create_pdf copy",
         "/update_pdf",
         "/about",
         "/kategori",
@@ -255,6 +278,9 @@ export const routeTree = rootRoute
     },
     "/create_pdf": {
       "filePath": "create_pdf.tsx"
+    },
+    "/create_pdf copy": {
+      "filePath": "create_pdf copy.tsx"
     },
     "/update_pdf": {
       "filePath": "update_pdf.tsx"

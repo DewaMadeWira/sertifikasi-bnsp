@@ -19,14 +19,18 @@ categoryRouter.put('/', async(req:Request<{},{},Category>,res:Response)=>{
     const category = await updateCategory(req.body.nama_kategori,req.body.id)
     res.send(category)
 })
-categoryRouter.delete('/', async(req:Request<{},{},Category>,res:Response)=>{
-    const category = await deleteCategory(req.body.id)
-    res.send(category)
-})
+// categoryRouter.delete('/', async(req:Request<{},{},Category>,res:Response)=>{
+//     const category = await deleteCategory(req.body.id)
+//     res.send(category)
+// })
 
 categoryRouter.get('/:id', async(req:Request<{id:number}>,res:Response)=>{
 const category = await getCategory(req.params.id)
 res.send(category)
+})
+categoryRouter.delete('/:id', async(req:Request<{id:number}>,res:Response)=>{
+    const category = await deleteCategory(req.params.id)
+    res.send(category)
 })
 
 
