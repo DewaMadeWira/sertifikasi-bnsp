@@ -115,6 +115,10 @@ export const columns: ColumnDef<Letter>[] = [
     header: "Nomor Surat",
   },
   {
+    accessorKey: "judul",
+    header: "Judul Surat",
+  },
+  {
     accessorKey: "nama_kategori",
     header: "Kategori",
   },
