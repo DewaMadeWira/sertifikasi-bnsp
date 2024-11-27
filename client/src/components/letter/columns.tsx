@@ -50,6 +50,7 @@ const ActionCell = ({ letter }: { letter: Letter }) => {
         description: "Surat berhasil dihapus",
         className: "bg-standard text-white",
       });
+      window.location.reload();
     },
   });
 
