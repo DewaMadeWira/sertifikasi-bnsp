@@ -119,10 +119,6 @@ export const columns: ColumnDef<Category>[] = [
     header: "Nama Kategori",
   },
   {
-    accessorKey: "nama_kategori",
-    header: "Kategori",
-  },
-  {
     id: "actions",
     header: "Aksi",
     cell: ({ row }) => {

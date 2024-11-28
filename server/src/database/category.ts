@@ -2,11 +2,11 @@ import { RowDataPacket } from "mysql2";
 import { pool } from "../database";
 import { Category } from "../types/category";
 
-export async function createCategory(name:string) {
+export async function createCategory(name:string,judul:string) {
 const [result] = await pool.query<[RowDataPacket]>(`
-  INSERT INTO kategori_surat (nama_kategori)
-  VALUES (?)
-  `, [name])
+  INSERT INTO kategori_surat (nama_kategori,judul)
+  VALUES (?,?)
+  `, [name,judul])
   return result
 }
 

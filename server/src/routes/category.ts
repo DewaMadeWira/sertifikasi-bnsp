@@ -12,7 +12,8 @@ res.send(category)
 })
 
 categoryRouter.post('/', async(req:Request<{},{},Category>,res:Response)=>{
-    const category = await createCategory(req.body.nama_kategori)
+    console.log(req.body)
+    const category = await createCategory(req.body.nama_kategori, req.body.judul)
     res.send(category)
 })
 categoryRouter.put('/', async(req:Request<{},{},Category>,res:Response)=>{
