@@ -12,14 +12,25 @@ res.send(category)
 })
 
 categoryRouter.post('/', async(req:Request<{},{},Category>,res:Response)=>{
+    try {
     console.log(req.body)
     const category = await createCategory(req.body.nama_kategori, req.body.judul)
+        
     res.send(category)
+    } catch (error) {
+        console.log(error)
+    if (error instanceof Error && error.message.includes('Category already exists')) {
+        res.status(409).json({ error: 'Category already exists' });
+    }
+        
+    }
+    
 })
 categoryRouter.put('/', async(req:Request<{},{},Category>,res:Response)=>{
     const category = await updateCategory(req.body.nama_kategori,req.body.id, req.body.judul)
-    res.send(category)
-})
+    res.send(category)  
+     })
+
 // categoryRouter.delete('/', async(req:Request<{},{},Category>,res:Response)=>{
 //     const category = await deleteCategory(req.body.id)
 //     res.send(category)

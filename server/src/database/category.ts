@@ -3,11 +3,23 @@ import { pool } from "../database";
 import { Category } from "../types/category";
 
 export async function createCategory(name:string,judul:string) {
+  try {
 const [result] = await pool.query<[RowDataPacket]>(`
   INSERT INTO kategori_surat (nama_kategori,judul)
   VALUES (?,?)
   `, [name,judul])
+    
   return result
+  } catch (error) {
+    // console.error('Duplicate key error:', error.message);
+    // return error
+    throw new Error('Category already exists');
+}
+    // console.error(error);
+    // if (error.includes('Duplicate entry')) {
+    //   throw new Error('Category already exists');
+    // }
+  // }
 }
 
 export async function getAllCategory() {

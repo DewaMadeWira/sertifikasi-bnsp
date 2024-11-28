@@ -37,8 +37,29 @@ function RouteComponent() {
         description: "Kategori berhasil ditambahkan",
         className: "bg-standard text-white",
       });
+
       // Handle success - can clear form, show notification etc
       // queryClient.invalidateQueries(["pdfs"]); // If you need to refetch PDF list
+    },
+    onError: (error: Error) => {
+      // alert(error);
+      // console.log(error);
+      if (!axios.isAxiosError(error)) {
+        return error;
+      }
+      if (error.status === 409) {
+        toast({
+          title: "Gagal",
+          description: "Kategori sudah ada",
+          className: "bg-red-500 text-white",
+        });
+      }
+      // toast({
+      //   title: "Gagal",
+      //   description: "Kategori gagal ditambahkan",
+      //   className: "bg-red-500 text-white",
+      // });
+      // Handle error - can show notification etc
     },
   });
 
