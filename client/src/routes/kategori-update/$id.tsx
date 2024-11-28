@@ -10,6 +10,7 @@ import { STYLE } from "@/types/style";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
+import Loading from "@/components/Loading";
 
 export const Route = createFileRoute("/kategori-update/$id")({
   component: RouteComponent,
@@ -75,7 +76,7 @@ function RouteComponent() {
     e.preventDefault();
     updateCategory.mutate(formData as any);
   };
-  if (isLoadingCategory) return <div>Loading...</div>;
+  if (isLoadingCategory) return <Loading></Loading>;
   if (category == undefined) return <div>Error loading data: </div>;
   console.log(category);
   // if (isLoading) return <div>Loading...</div>;

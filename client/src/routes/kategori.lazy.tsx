@@ -8,6 +8,7 @@ import { DataTable } from "@/components/category/data-table";
 import { columns } from "@/components/category/columns";
 import { Button } from "@/components/ui/button";
 import { STYLE } from "@/types/style";
+import Loading from "@/components/Loading";
 
 export const Route = createLazyFileRoute("/kategori")({
   component: Kategori,
@@ -18,10 +19,11 @@ function Kategori() {
     queryKey: ["surat"],
     queryFn: async () => {
       const { data } = await axios.get(ROUTES.CATEGORY);
+      await new Promise((resolve) => setTimeout(resolve, 500));
       return data as Category[];
     },
   });
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading></Loading>;
   if (data == undefined) return <div>Error loading data: </div>;
   return (
     <Sidebar>

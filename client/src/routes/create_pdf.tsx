@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { STYLE } from "@/types/style";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import Loading from "@/components/Loading";
 
 export const Route = createFileRoute("/create_pdf")({
   component: RouteComponent,
@@ -78,10 +79,11 @@ function RouteComponent() {
     queryFn: async () => {
       const { data } = await axios.get(ROUTES.CATEGORY);
       console.log(data);
+      await new Promise((resolve) => setTimeout(resolve, 500));
       return data as Category[];
     },
   });
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading></Loading>;
   if (data == undefined) return <div>Error loading data: </div>;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

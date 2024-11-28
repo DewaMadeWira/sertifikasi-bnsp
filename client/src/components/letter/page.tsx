@@ -3,6 +3,7 @@ import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import axios from "axios";
 import { Letter } from "@/types/letter";
+import Loading from "../Loading";
 
 // async function getData(): Promise<Letter[]> {
 //   // Fetch data from your API here.
@@ -26,5 +27,9 @@ export default async function LetterTable() {
     },
   });
 
-  return isLoading ? "Loading" : <DataTable columns={columns} data={data!} />;
+  return isLoading ? (
+    <Loading></Loading>
+  ) : (
+    <DataTable columns={columns} data={data!} />
+  );
 }
