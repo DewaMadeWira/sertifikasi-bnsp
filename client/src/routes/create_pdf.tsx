@@ -1,5 +1,5 @@
 import * as React from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import Sidebar from "@/components/Sidebar";
 import { useMutation, useQuery } from "react-query";
 import axios from "axios";
@@ -159,7 +159,13 @@ function RouteComponent() {
               accept="application/pdf"
               required
             ></Input>
-            <div className="w-full flex justify-end">
+            <div className="w-full flex justify-end gap-2">
+              <Link to="/">
+                <Button className={STYLE.BUTTON_PRIMARY + "mt-2"}>
+                  Kembali
+                </Button>
+              </Link>
+
               <Button className={STYLE.BUTTON_PRIMARY + "mt-2"}>Simpan</Button>
             </div>
           </form>

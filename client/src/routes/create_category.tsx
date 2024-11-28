@@ -1,7 +1,7 @@
 import * as React from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import Sidebar from "@/components/Sidebar";
-import { useMutation, } from "react-query";
+import { useMutation } from "react-query";
 import axios from "axios";
 import { ROUTES } from "@/types/routes";
 import { Input } from "@/components/ui/input";
@@ -85,10 +85,15 @@ function RouteComponent() {
               onChange={handleFormChange}
               value={formData.judul}
               name="judul"
-              placeholder="Judul Surat"
+              placeholder="Judul "
               required
             ></Input>
-            <div className="w-full flex justify-end">
+            <div className="w-full flex justify-end gap-2">
+              <Link to="/">
+                <Button className={STYLE.BUTTON_PRIMARY + "mt-2"}>
+                  Kembali
+                </Button>
+              </Link>
               <Button className={STYLE.BUTTON_PRIMARY + "mt-2"}>Simpan</Button>
             </div>
           </form>

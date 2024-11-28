@@ -77,7 +77,10 @@ function RouteComponent() {
       <div className="flex flex-col items-center justify-center mt-10">
         <embed src={pdfUrl} width="80%" height="400px" type="application/pdf" />
       </div>
-      <div className="flex gap-3 mt-10">
+      <div className="flex gap-3 mt-10 items-center">
+        <Link to="/">
+          <Button className={STYLE.BUTTON_PRIMARY + ""}>Kembali</Button>
+        </Link>
         <a href={ROUTES.ARSIP_PDF + id} download>
           <Button className={STYLE.BUTTON_PRIMARY}>
             <div className="flex justify-between w-16">
