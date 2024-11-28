@@ -14,6 +14,10 @@ export const Route = createFileRoute("/create_category")({
   component: RouteComponent,
 });
 
+interface FormData {
+  nama_kategori: string;
+  judul: string;
+}
 function RouteComponent() {
   const [formData, setFormData] = useState({
     nama_kategori: "",
@@ -21,8 +25,8 @@ function RouteComponent() {
   });
   const { toast } = useToast();
   const createCategory = useMutation({
-    mutationKey: ["create_category"],
-    mutationFn: async () => {
+    // mutationKey: ["create_category"],
+    mutationFn: async (data: FormData) => {
       // console.log(data);
       const response = await axios.post(ROUTES.CATEGORY, {
         nama_kategori: formData.nama_kategori,
@@ -37,9 +41,6 @@ function RouteComponent() {
         description: "Kategori berhasil ditambahkan",
         className: "bg-standard text-white",
       });
-
-      // Handle success - can clear form, show notification etc
-      // queryClient.invalidateQueries(["pdfs"]); // If you need to refetch PDF list
     },
     onError: (error: Error) => {
       // alert(error);
@@ -54,12 +55,6 @@ function RouteComponent() {
           className: "bg-red-500 text-white",
         });
       }
-      // toast({
-      //   title: "Gagal",
-      //   description: "Kategori gagal ditambahkan",
-      //   className: "bg-red-500 text-white",
-      // });
-      // Handle error - can show notification etc
     },
   });
 
