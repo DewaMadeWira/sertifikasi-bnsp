@@ -14,4 +14,5 @@ export const ROUTES_CLIENT = {
     ARSIP_PDF_UPDATE :`pdf/update/`,
     CATEGORY : `/category`,
     CATEGORY_CREATE : `/create_category`,
+    CATEGORY_UPDATE : `/category/`,
 }

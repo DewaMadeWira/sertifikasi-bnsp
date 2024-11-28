@@ -19,6 +19,7 @@ import { Route as CreatecategoryImport } from './routes/create_category'
 import { Route as IndexImport } from './routes/index'
 import { Route as PdfUpdateidImport } from './routes/pdf/update$id'
 import { Route as PdfIdImport } from './routes/pdf/$id'
+import { Route as KategoriUpdateIdImport } from './routes/kategori-update/$id'
 import { Route as PdfUpdateIdImport } from './routes/pdf/update/$id'
 
 // Create Virtual Routes
@@ -76,6 +77,12 @@ const PdfIdRoute = PdfIdImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const KategoriUpdateIdRoute = KategoriUpdateIdImport.update({
+  id: '/kategori-update/$id',
+  path: '/kategori-update/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const PdfUpdateIdRoute = PdfUpdateIdImport.update({
   id: '/pdf/update/$id',
   path: '/pdf/update/$id',
@@ -128,6 +135,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KategoriLazyImport
       parentRoute: typeof rootRoute
     }
+    '/kategori-update/$id': {
+      id: '/kategori-update/$id'
+      path: '/kategori-update/$id'
+      fullPath: '/kategori-update/$id'
+      preLoaderRoute: typeof KategoriUpdateIdImport
+      parentRoute: typeof rootRoute
+    }
     '/pdf/$id': {
       id: '/pdf/$id'
       path: '/pdf/$id'
@@ -161,6 +175,7 @@ export interface FileRoutesByFullPath {
   '/update_pdf': typeof UpdatepdfRoute
   '/about': typeof AboutLazyRoute
   '/kategori': typeof KategoriLazyRoute
+  '/kategori-update/$id': typeof KategoriUpdateIdRoute
   '/pdf/$id': typeof PdfIdRoute
   '/pdf/update$id': typeof PdfUpdateidRoute
   '/pdf/update/$id': typeof PdfUpdateIdRoute
@@ -173,6 +188,7 @@ export interface FileRoutesByTo {
   '/update_pdf': typeof UpdatepdfRoute
   '/about': typeof AboutLazyRoute
   '/kategori': typeof KategoriLazyRoute
+  '/kategori-update/$id': typeof KategoriUpdateIdRoute
   '/pdf/$id': typeof PdfIdRoute
   '/pdf/update$id': typeof PdfUpdateidRoute
   '/pdf/update/$id': typeof PdfUpdateIdRoute
@@ -186,6 +202,7 @@ export interface FileRoutesById {
   '/update_pdf': typeof UpdatepdfRoute
   '/about': typeof AboutLazyRoute
   '/kategori': typeof KategoriLazyRoute
+  '/kategori-update/$id': typeof KategoriUpdateIdRoute
   '/pdf/$id': typeof PdfIdRoute
   '/pdf/update$id': typeof PdfUpdateidRoute
   '/pdf/update/$id': typeof PdfUpdateIdRoute
@@ -200,6 +217,7 @@ export interface FileRouteTypes {
     | '/update_pdf'
     | '/about'
     | '/kategori'
+    | '/kategori-update/$id'
     | '/pdf/$id'
     | '/pdf/update$id'
     | '/pdf/update/$id'
@@ -211,6 +229,7 @@ export interface FileRouteTypes {
     | '/update_pdf'
     | '/about'
     | '/kategori'
+    | '/kategori-update/$id'
     | '/pdf/$id'
     | '/pdf/update$id'
     | '/pdf/update/$id'
@@ -222,6 +241,7 @@ export interface FileRouteTypes {
     | '/update_pdf'
     | '/about'
     | '/kategori'
+    | '/kategori-update/$id'
     | '/pdf/$id'
     | '/pdf/update$id'
     | '/pdf/update/$id'
@@ -235,6 +255,7 @@ export interface RootRouteChildren {
   UpdatepdfRoute: typeof UpdatepdfRoute
   AboutLazyRoute: typeof AboutLazyRoute
   KategoriLazyRoute: typeof KategoriLazyRoute
+  KategoriUpdateIdRoute: typeof KategoriUpdateIdRoute
   PdfIdRoute: typeof PdfIdRoute
   PdfUpdateidRoute: typeof PdfUpdateidRoute
   PdfUpdateIdRoute: typeof PdfUpdateIdRoute
@@ -247,6 +268,7 @@ const rootRouteChildren: RootRouteChildren = {
   UpdatepdfRoute: UpdatepdfRoute,
   AboutLazyRoute: AboutLazyRoute,
   KategoriLazyRoute: KategoriLazyRoute,
+  KategoriUpdateIdRoute: KategoriUpdateIdRoute,
   PdfIdRoute: PdfIdRoute,
   PdfUpdateidRoute: PdfUpdateidRoute,
   PdfUpdateIdRoute: PdfUpdateIdRoute,
@@ -268,6 +290,7 @@ export const routeTree = rootRoute
         "/update_pdf",
         "/about",
         "/kategori",
+        "/kategori-update/$id",
         "/pdf/$id",
         "/pdf/update$id",
         "/pdf/update/$id"
@@ -290,6 +313,9 @@ export const routeTree = rootRoute
     },
     "/kategori": {
       "filePath": "kategori.lazy.tsx"
+    },
+    "/kategori-update/$id": {
+      "filePath": "kategori-update/$id.tsx"
     },
     "/pdf/$id": {
       "filePath": "pdf/$id.tsx"

@@ -25,11 +25,11 @@ function Kategori() {
   if (data == undefined) return <div>Error loading data: </div>;
   return (
     <Sidebar>
-      <h1 className="text-4xl">Arsip Surat</h1>
+      <h1 className="text-4xl">Kategori Surat</h1>
       {/* <div className="">{JSON.stringify(data)}</div> */}
       <p className="w-1/2 mt-2">
-        Berikut ini adalah surat-surat yang telah terbit dan diarsipkan. Klik
-        "Lihat" pada kolom aksi untuk menampilkan surat{" "}
+        Berikut ini adalah kategori yang bisa digunakan untuk melabeli surat.
+        Klik "Tambah" untuk menbambahkan kategori baru{" "}
       </p>
       <div className="mt-10">
         <DataTable columns={columns} data={data} />

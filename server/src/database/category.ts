@@ -27,10 +27,10 @@ export async function getCategory(id:number) {
   return rows[0] as Category;
 }
 
-export async function updateCategory(name:string,id:number) {
+export async function updateCategory(name:string,id:number,judul:string) {
 const [result] = await pool.query<[RowDataPacket]>(`
- UPDATE kategori_surat SET nama_kategori = ? WHERE id = ?; 
-  `, [name,id])
+ UPDATE kategori_surat SET nama_kategori = ?, judul= ? WHERE id = ?; 
+  `, [name,judul,id])
   return result
 }
 

@@ -17,7 +17,7 @@ categoryRouter.post('/', async(req:Request<{},{},Category>,res:Response)=>{
     res.send(category)
 })
 categoryRouter.put('/', async(req:Request<{},{},Category>,res:Response)=>{
-    const category = await updateCategory(req.body.nama_kategori,req.body.id)
+    const category = await updateCategory(req.body.nama_kategori,req.body.id, req.body.judul)
     res.send(category)
 })
 // categoryRouter.delete('/', async(req:Request<{},{},Category>,res:Response)=>{

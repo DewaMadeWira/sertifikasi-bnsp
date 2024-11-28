@@ -79,7 +79,10 @@ const ActionCell = ({ category }: { category: Category }) => {
             <AlertDialogTrigger>Hapus</AlertDialogTrigger>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Link to="/pdf/$id" params={{ id: category.id.toString() }}>
+            <Link
+              to="/kategori-update/$id"
+              params={{ id: category.id.toString() }}
+            >
               Edit
             </Link>
           </DropdownMenuItem>
@@ -117,6 +120,10 @@ export const columns: ColumnDef<Category>[] = [
   {
     accessorKey: "nama_kategori",
     header: "Nama Kategori",
+  },
+  {
+    accessorKey: "judul",
+    header: "Keterangan",
   },
   {
     id: "actions",
