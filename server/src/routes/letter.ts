@@ -28,6 +28,7 @@ const upload = multer({ storage: storage,fileFilter:fileFilter }).single('file')
 
 letterRouter.post('/',upload, async(req:Request<{},{},Letter>,res:Response)=>{
 
+    // const filePath = path.join(__dirname,'..',`..`, 'uploads', `${req.file!.filename}`); 
     const filePath = path.join(__dirname,'..',`..`, 'uploads', `${req.file!.filename}`); 
     console.log(filePath)
     const letter = await createLetter(req.body.nomor_surat,req.body.id_kategori ,req.body.judul,filePath)

@@ -1,5 +1,5 @@
 export type Category = {
     id: number;
     nama_kategori: string;
-    judul:string
+    created_at: string;
 };

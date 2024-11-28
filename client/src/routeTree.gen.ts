@@ -13,12 +13,19 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as UpdatepdfImport } from './routes/update_pdf'
+import { Route as CreatepdfImport } from './routes/create_pdf'
+import { Route as CreatecategoryImport } from './routes/create_category'
+import { Route as IndexImport } from './routes/index'
+import { Route as PdfUpdateidImport } from './routes/pdf/update$id'
+import { Route as PdfIdImport } from './routes/pdf/$id'
+import { Route as KategoriUpdateIdImport } from './routes/kategori-update/$id'
+import { Route as PdfUpdateIdImport } from './routes/pdf/update/$id'
 
 // Create Virtual Routes
 
 const KategoriLazyImport = createFileRoute('/kategori')()
 const AboutLazyImport = createFileRoute('/about')()
-const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
 
@@ -34,11 +41,53 @@ const AboutLazyRoute = AboutLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
 
-const IndexLazyRoute = IndexLazyImport.update({
+const UpdatepdfRoute = UpdatepdfImport.update({
+  id: '/update_pdf',
+  path: '/update_pdf',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CreatepdfRoute = CreatepdfImport.update({
+  id: '/create_pdf',
+  path: '/create_pdf',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CreatecategoryRoute = CreatecategoryImport.update({
+  id: '/create_category',
+  path: '/create_category',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+} as any)
+
+const PdfUpdateidRoute = PdfUpdateidImport.update({
+  id: '/pdf/update$id',
+  path: '/pdf/update$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PdfIdRoute = PdfIdImport.update({
+  id: '/pdf/$id',
+  path: '/pdf/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const KategoriUpdateIdRoute = KategoriUpdateIdImport.update({
+  id: '/kategori-update/$id',
+  path: '/kategori-update/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PdfUpdateIdRoute = PdfUpdateIdImport.update({
+  id: '/pdf/update/$id',
+  path: '/pdf/update/$id',
+  getParentRoute: () => rootRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -48,7 +97,28 @@ declare module '@tanstack/react-router' {
       id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexLazyImport
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/create_category': {
+      id: '/create_category'
+      path: '/create_category'
+      fullPath: '/create_category'
+      preLoaderRoute: typeof CreatecategoryImport
+      parentRoute: typeof rootRoute
+    }
+    '/create_pdf': {
+      id: '/create_pdf'
+      path: '/create_pdf'
+      fullPath: '/create_pdf'
+      preLoaderRoute: typeof CreatepdfImport
+      parentRoute: typeof rootRoute
+    }
+    '/update_pdf': {
+      id: '/update_pdf'
+      path: '/update_pdf'
+      fullPath: '/update_pdf'
+      preLoaderRoute: typeof UpdatepdfImport
       parentRoute: typeof rootRoute
     }
     '/about': {
@@ -65,49 +135,143 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KategoriLazyImport
       parentRoute: typeof rootRoute
     }
+    '/kategori-update/$id': {
+      id: '/kategori-update/$id'
+      path: '/kategori-update/$id'
+      fullPath: '/kategori-update/$id'
+      preLoaderRoute: typeof KategoriUpdateIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/pdf/$id': {
+      id: '/pdf/$id'
+      path: '/pdf/$id'
+      fullPath: '/pdf/$id'
+      preLoaderRoute: typeof PdfIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/pdf/update$id': {
+      id: '/pdf/update$id'
+      path: '/pdf/update$id'
+      fullPath: '/pdf/update$id'
+      preLoaderRoute: typeof PdfUpdateidImport
+      parentRoute: typeof rootRoute
+    }
+    '/pdf/update/$id': {
+      id: '/pdf/update/$id'
+      path: '/pdf/update/$id'
+      fullPath: '/pdf/update/$id'
+      preLoaderRoute: typeof PdfUpdateIdImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexLazyRoute
+  '/': typeof IndexRoute
+  '/create_category': typeof CreatecategoryRoute
+  '/create_pdf': typeof CreatepdfRoute
+  '/update_pdf': typeof UpdatepdfRoute
   '/about': typeof AboutLazyRoute
   '/kategori': typeof KategoriLazyRoute
+  '/kategori-update/$id': typeof KategoriUpdateIdRoute
+  '/pdf/$id': typeof PdfIdRoute
+  '/pdf/update$id': typeof PdfUpdateidRoute
+  '/pdf/update/$id': typeof PdfUpdateIdRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexLazyRoute
+  '/': typeof IndexRoute
+  '/create_category': typeof CreatecategoryRoute
+  '/create_pdf': typeof CreatepdfRoute
+  '/update_pdf': typeof UpdatepdfRoute
   '/about': typeof AboutLazyRoute
   '/kategori': typeof KategoriLazyRoute
+  '/kategori-update/$id': typeof KategoriUpdateIdRoute
+  '/pdf/$id': typeof PdfIdRoute
+  '/pdf/update$id': typeof PdfUpdateidRoute
+  '/pdf/update/$id': typeof PdfUpdateIdRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/': typeof IndexLazyRoute
+  '/': typeof IndexRoute
+  '/create_category': typeof CreatecategoryRoute
+  '/create_pdf': typeof CreatepdfRoute
+  '/update_pdf': typeof UpdatepdfRoute
   '/about': typeof AboutLazyRoute
   '/kategori': typeof KategoriLazyRoute
+  '/kategori-update/$id': typeof KategoriUpdateIdRoute
+  '/pdf/$id': typeof PdfIdRoute
+  '/pdf/update$id': typeof PdfUpdateidRoute
+  '/pdf/update/$id': typeof PdfUpdateIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/kategori'
+  fullPaths:
+    | '/'
+    | '/create_category'
+    | '/create_pdf'
+    | '/update_pdf'
+    | '/about'
+    | '/kategori'
+    | '/kategori-update/$id'
+    | '/pdf/$id'
+    | '/pdf/update$id'
+    | '/pdf/update/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/kategori'
-  id: '__root__' | '/' | '/about' | '/kategori'
+  to:
+    | '/'
+    | '/create_category'
+    | '/create_pdf'
+    | '/update_pdf'
+    | '/about'
+    | '/kategori'
+    | '/kategori-update/$id'
+    | '/pdf/$id'
+    | '/pdf/update$id'
+    | '/pdf/update/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/create_category'
+    | '/create_pdf'
+    | '/update_pdf'
+    | '/about'
+    | '/kategori'
+    | '/kategori-update/$id'
+    | '/pdf/$id'
+    | '/pdf/update$id'
+    | '/pdf/update/$id'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexLazyRoute: typeof IndexLazyRoute
+  IndexRoute: typeof IndexRoute
+  CreatecategoryRoute: typeof CreatecategoryRoute
+  CreatepdfRoute: typeof CreatepdfRoute
+  UpdatepdfRoute: typeof UpdatepdfRoute
   AboutLazyRoute: typeof AboutLazyRoute
   KategoriLazyRoute: typeof KategoriLazyRoute
+  KategoriUpdateIdRoute: typeof KategoriUpdateIdRoute
+  PdfIdRoute: typeof PdfIdRoute
+  PdfUpdateidRoute: typeof PdfUpdateidRoute
+  PdfUpdateIdRoute: typeof PdfUpdateIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexLazyRoute: IndexLazyRoute,
+  IndexRoute: IndexRoute,
+  CreatecategoryRoute: CreatecategoryRoute,
+  CreatepdfRoute: CreatepdfRoute,
+  UpdatepdfRoute: UpdatepdfRoute,
   AboutLazyRoute: AboutLazyRoute,
   KategoriLazyRoute: KategoriLazyRoute,
+  KategoriUpdateIdRoute: KategoriUpdateIdRoute,
+  PdfIdRoute: PdfIdRoute,
+  PdfUpdateidRoute: PdfUpdateidRoute,
+  PdfUpdateIdRoute: PdfUpdateIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -121,18 +285,46 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/create_category",
+        "/create_pdf",
+        "/update_pdf",
         "/about",
-        "/kategori"
+        "/kategori",
+        "/kategori-update/$id",
+        "/pdf/$id",
+        "/pdf/update$id",
+        "/pdf/update/$id"
       ]
     },
     "/": {
-      "filePath": "index.lazy.tsx"
+      "filePath": "index.tsx"
+    },
+    "/create_category": {
+      "filePath": "create_category.tsx"
+    },
+    "/create_pdf": {
+      "filePath": "create_pdf.tsx"
+    },
+    "/update_pdf": {
+      "filePath": "update_pdf.tsx"
     },
     "/about": {
       "filePath": "about.lazy.tsx"
     },
     "/kategori": {
       "filePath": "kategori.lazy.tsx"
+    },
+    "/kategori-update/$id": {
+      "filePath": "kategori-update/$id.tsx"
+    },
+    "/pdf/$id": {
+      "filePath": "pdf/$id.tsx"
+    },
+    "/pdf/update$id": {
+      "filePath": "pdf/update$id.tsx"
+    },
+    "/pdf/update/$id": {
+      "filePath": "pdf/update/$id.tsx"
     }
   }
 }
