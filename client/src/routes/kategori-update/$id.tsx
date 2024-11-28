@@ -3,7 +3,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import axios from "axios";
 import { useMutation, useQuery } from "react-query";
 import { ROUTES } from "@/types/routes";
-import { Category } from "@/types/category";
 import Sidebar from "@/components/Sidebar";
 import { Button } from "@/components/ui/button";
 import { STYLE } from "@/types/style";
