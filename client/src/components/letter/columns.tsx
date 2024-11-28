@@ -3,7 +3,7 @@
 import { Letter } from "@/types/letter";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
-
+import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -111,6 +111,21 @@ const ActionCell = ({ letter }: { letter: Letter }) => {
 };
 export const columns: ColumnDef<Letter>[] = [
   {
+    accessorKey: "id",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          ID
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+
+  {
     accessorKey: "nomor_surat",
     header: "Nomor Surat",
   },
@@ -124,7 +139,17 @@ export const columns: ColumnDef<Letter>[] = [
   },
   {
     accessorKey: "created_at",
-    header: "Tanggal Pengarsipan",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Tanggal
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       let data = row.original.created_at;
       data = data.slice(0, 10);

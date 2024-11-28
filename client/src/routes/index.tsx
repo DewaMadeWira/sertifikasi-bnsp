@@ -1,5 +1,6 @@
 import { columns } from "@/components/letter/columns";
 import { DataTable } from "@/components/letter/data-table";
+import Loading from "@/components/Loading";
 import Sidebar from "@/components/Sidebar";
 import { Button } from "@/components/ui/button";
 import { Letter } from "@/types/letter";
@@ -18,10 +19,11 @@ function RouteComponent() {
     queryKey: ["surat"],
     queryFn: async () => {
       const { data } = await axios.get(ROUTES.ARSIP);
+      await new Promise((resolve) => setTimeout(resolve, 500));
       return data as Letter[];
     },
   });
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading></Loading>;
   if (data == undefined) return <div>Error loading data: </div>;
 
   console.log(data);

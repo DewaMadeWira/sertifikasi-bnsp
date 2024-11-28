@@ -1,7 +1,7 @@
 import * as React from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import Sidebar from "@/components/Sidebar";
-import { useMutation, } from "react-query";
+import { useMutation } from "react-query";
 import axios from "axios";
 import { ROUTES } from "@/types/routes";
 import { Input } from "@/components/ui/input";
@@ -37,8 +37,29 @@ function RouteComponent() {
         description: "Kategori berhasil ditambahkan",
         className: "bg-standard text-white",
       });
+
       // Handle success - can clear form, show notification etc
       // queryClient.invalidateQueries(["pdfs"]); // If you need to refetch PDF list
+    },
+    onError: (error: Error) => {
+      // alert(error);
+      // console.log(error);
+      if (!axios.isAxiosError(error)) {
+        return error;
+      }
+      if (error.status === 409) {
+        toast({
+          title: "Gagal",
+          description: "Kategori sudah ada",
+          className: "bg-red-500 text-white",
+        });
+      }
+      // toast({
+      //   title: "Gagal",
+      //   description: "Kategori gagal ditambahkan",
+      //   className: "bg-red-500 text-white",
+      // });
+      // Handle error - can show notification etc
     },
   });
 
@@ -85,10 +106,15 @@ function RouteComponent() {
               onChange={handleFormChange}
               value={formData.judul}
               name="judul"
-              placeholder="Judul Surat"
+              placeholder="Judul "
               required
             ></Input>
-            <div className="w-full flex justify-end">
+            <div className="w-full flex justify-end gap-2">
+              <Link to="/">
+                <Button className={STYLE.BUTTON_PRIMARY + "mt-2"}>
+                  Kembali
+                </Button>
+              </Link>
               <Button className={STYLE.BUTTON_PRIMARY + "mt-2"}>Simpan</Button>
             </div>
           </form>

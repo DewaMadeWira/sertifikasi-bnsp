@@ -17,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Loading from "@/components/Loading";
 
 export const Route = createFileRoute("/update_pdf")({
   component: RouteComponent,
@@ -81,7 +82,7 @@ function RouteComponent() {
       return data as Category[];
     },
   });
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading></Loading>;
   if (data == undefined) return <div>Error loading data: </div>;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
