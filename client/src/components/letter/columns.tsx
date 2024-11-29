@@ -45,12 +45,13 @@ const ActionCell = ({ letter }: { letter: Letter }) => {
     mutationFn: async () => {
       await axios.delete(`${ROUTES.ARSIP}${letter.id}`);
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       toast({
         title: "Berhasil",
         description: "Surat berhasil dihapus",
         className: "bg-standard text-white",
       });
+      await new Promise((resolve) => setTimeout(resolve, 500));
       window.location.reload();
     },
   });

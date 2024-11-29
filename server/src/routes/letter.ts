@@ -81,6 +81,16 @@ letterRouter.put('/', upload, async(req:Request<{},{},Omit<Letter,'file_pdf'>>,r
 })
 
 letterRouter.delete('/:id', async(req:Request<{id:number}>,res:Response)=>{
+    
+    const {file_pdf:filePathSource} = await getLetter(req.params.id)
+    fs.unlink(filePathSource, (err) => {
+    if (err) {
+        console.error(`Error removing file: ${err}`);
+        return;
+    }
+
+    console.log(`File ${filePathSource} has been successfully removed.`);
+    })
     const letter = await deleteLetter(req.params.id)
     res.send(letter)
 })
