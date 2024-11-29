@@ -14,7 +14,7 @@ function About() {
         <img src={photo} width={200} alt="" />
         <div className="">
           <p className="font-bold  text-xl">Aplikasi ini dibuat oleh :</p>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="flex gap-2">
             <div className="">
               <p>Nama </p>
               <p>Prodi </p>
@@ -28,10 +28,10 @@ function About() {
               <p>:</p>
             </div>
             <div className="">
-              <p>Nama </p>
-              <p>Prodi </p>
-              <p>NIM </p>
-              <p>Tanggal </p>
+              <p>I Dewa Made Wira Wardhana A. </p>
+              <p>Sistem Informasi Bisnis </p>
+              <p>2141762062 </p>
+              <p>29-11-2024 </p>
             </div>
           </div>
         </div>

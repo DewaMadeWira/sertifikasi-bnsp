@@ -26,6 +26,7 @@ function RouteComponent() {
   const { toast } = useToast();
   const createCategory = useMutation({
     // mutationKey: ["create_category"],
+    // @ts-ignore
     mutationFn: async (data: FormData) => {
       // console.log(data);
       const response = await axios.post(ROUTES.CATEGORY, {
