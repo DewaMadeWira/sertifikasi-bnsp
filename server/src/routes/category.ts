@@ -41,8 +41,17 @@ const category = await getCategory(req.params.id)
 res.send(category)
 })
 categoryRouter.delete('/:id', async(req:Request<{id:number}>,res:Response)=>{
+    try {
     const category = await deleteCategory(req.params.id)
     res.send(category)
+        
+    } catch (error) {
+        console.log(error)
+    if (error instanceof Error && error.message.includes('Category still in Relation')) {
+        res.status(403).json({ error: 'Category already still in Relation' });
+    }
+        
+    }
 })
 
 

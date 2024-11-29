@@ -47,8 +47,14 @@ const [result] = await pool.query<[RowDataPacket]>(`
 }
 
 export async function deleteCategory(id:number) {
-const [result] = await pool.query<[RowDataPacket]>(`
- DELETE FROM kategori_surat WHERE id = ? ; 
+  try {
+  const [result] = await pool.query<[RowDataPacket]>(`
+  DELETE FROM kategori_surat WHERE id = ? ; 
   `, [id])
   return result
+    
+  } catch (error) {
+    
+    throw new Error('Category still in Relation');
+  }
 }

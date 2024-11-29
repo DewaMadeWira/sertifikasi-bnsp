@@ -43,6 +43,7 @@ const ActionCell = ({ category }: { category: Category }) => {
   const { toast } = useToast();
   const { mutate: deleteLetter } = useMutation({
     // mutationFn: async (formData: { id: string }) => {
+    // @ts-ignore
     mutationFn: async () => {
       // const data = new FormData();
       // data.append("id", category.id.toString());
@@ -55,6 +56,20 @@ const ActionCell = ({ category }: { category: Category }) => {
         className: "bg-standard text-white",
       });
       window.location.reload();
+    },
+    onError: (error: Error) => {
+      // alert(error);
+      // console.log(error);
+      if (!axios.isAxiosError(error)) {
+        return error;
+      }
+      if (error.status === 403) {
+        toast({
+          title: "Gagal",
+          description: "Kategori masih dalam relasi",
+          className: "bg-red-500 text-white",
+        });
+      }
     },
   });
 
